@@ -15,7 +15,7 @@ Object {
 		case this.OK:	this.href = 'https://connect.ok.ru/offer?url='; break
 		}
 	}
-	
+
 	open: {
 		if (!this.href) {
 			log("href is undefined!")
