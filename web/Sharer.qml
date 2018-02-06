@@ -1,29 +1,40 @@
 Object {
-	property enum socailNetwork { GPlus, Facebook, Vk, Twitter };
-	property string url;
+	property enum socialNetwork { None, GPlus, Facebook, Vk, Twitter, Telegram, OK }; ///<
+	property string href; ///<
+	property string url; ///<
+	// TODO: title, description
 
-	onSocailNetworkChanged: {
+	onSocialNetworkChanged: {
 		switch(value) {
+		case this.None:	this.href = ''; break
 		case this.GPlus:	this.href = 'https://plus.google.com/share?url='; break
-		case this.Facebook:	this.href = 'https://www.facebook.com/sharer/sharer.php?s=100&amp;p%5Burl%5D='; break
-		case this.Vk:		this.href = 'https://vkontakte.ru/share.php?url='; break
+		case this.Facebook:	this.href = 'https://www.facebook.com/sharer/sharer.php?u='; break
+		case this.Vk:		this.href = 'https://vk.com/share.php?url='; break
 		case this.Twitter:	this.href = 'https://twitter.com/share?url='; break
+		case this.Telegram:	this.href = 'https://t.me/share/url?url='; break
+		case this.OK:	this.href = 'https://connect.ok.ru/offer?url='; break
 		}
 	}
-
+	
 	open: {
-		if (!this.url) {
-			log("url is undefined!")
+		if (!this.href) {
+			log("href is undefined!")
 			return
 		}
-		window.open(this.href + this.url + '%2Fauth%2Flogin')
+		if (!this.url)
+			this.url = window.location.href
+
+		window.open(this.href + this.url)
 	}
 
 	redirect: {
-		if (!this.url) {
-			log("url is undefined!")
+		if (!this.href) {
+			log("href is undefined!")
 			return
 		}
-		window.location = this.href + this.url + '%2Fauth%2Flogin'
+		if (!this.url)
+			this.url = window.location.href
+			
+		window.location = this.href + this.url
 	}
 }
