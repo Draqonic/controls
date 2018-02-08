@@ -16,5 +16,6 @@ Validator {
 			this.pastText = value
 		else
 			this.parent.text = this.pastText
+		this.valid = check
 	}
 }

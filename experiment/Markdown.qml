@@ -2,20 +2,8 @@ Object {
 	property string markText: parent.text;
 	property bool enabled;
 	
-	function _checkMarkdown(newText, mark, tag) {
-		var check = false
-		if (newText.indexOf(mark) !== -1) {
-			while(newText.indexOf(mark) !== -1) {
-				var start = '<%1>'.arg(tag)
-				var back = '</%1>'.arg(tag)
-				newText = check ? newText.replace(mark, back) : newText.replace(mark, start)
-                		check = !check
-			}
-		}
-		return newText
-	}
-	
-	onMarkTextChanged: {
+	// TODO: process function for public
+	function _process() {
 		if (!this.enabled || !this.markText)
 			return
 
@@ -32,5 +20,23 @@ Object {
 			markText = Qt.binding(function() { return text }) // temp hack for Qt
 			this.enabled = true
 		}
+	}
+	
+	function _checkMarkdown(newText, mark, tag) {
+		var check = false
+		if (newText.indexOf(mark) !== -1) {
+			while(newText.indexOf(mark) !== -1) {
+				var start = '<%1>'.arg(tag)
+				var back = '</%1>'.arg(tag)
+				newText = check ? newText.replace(mark, back) : newText.replace(mark, start)
+                		check = !check
+			}
+		}
+		return newText
+	}
+	
+	onCompleted,
+	onMarkTextChanged: {
+		this._process();
 	}
 }

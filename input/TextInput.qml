@@ -74,4 +74,42 @@ BaseInput {
 	function getText(start, end) {
 		return this.text.substring(start, end)
 	}
+
+
+
+
+	function copy() {
+		document.execCommand("Copy");
+	}
+
+	function cut() {
+		document.execCommand("Cut");
+	}
+
+	function selectWord() {
+	}
+	
+	//property int cursorPosition;
+	
+	
+	// TODO
+	property color selectedTextColor: "red";
+	onSelectedTextColorChanged: {
+		log("COLOR")
+		
+	}
+	// selectionColor
+	// alignment
+	
+	function deselect() {
+	}
+	
+	function paste() {
+	}
+	
+	function redo() {
+	}
+	
+
+	
 }
