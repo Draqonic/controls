@@ -1,6 +1,6 @@
 BaseMixin {
-	property string value;
 	property bool enabled: true;
+	property string value;
 
 	onValueChanged,
 	onEnabledChanged: {

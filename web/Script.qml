@@ -7,17 +7,15 @@ Item {
 
 	/// @private
 	function _delayedLoad() {
-		this._context.delayedAction('script:load', this, this.load())
-	}
-
-	function load() {
-		var source = this.source
-		if (!source)
-			return
-
-		log('loading script from ' + source)
-
-		this.element.dom.setAttribute('src', source)
+		this._context.delayedAction('script:load', this, function load() {
+			var source = this.source
+			if (!source)
+				return
+	
+			log('loading script from ' + source)
+	
+			this.element.dom.setAttribute('src', source)
+		})
 	}
 
 	onSourceChanged:	{ this._delayedLoad() }

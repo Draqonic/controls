@@ -1,11 +1,16 @@
-// need https://github.com/emn178/js-sha256 + <script src="sha256.js"></script> in dist/index.html
-Object {
+// need https://github.com/emn178/js-sha256
+Item {
 	property bool enabled: true;
 	property string value;
 	property string result;
 	
 	onValueChanged: {
-		if (this.enabled)
+		if (this.enabled && window.sha256)
 			this.result =  window.sha256(this.value);
+	}
+	
+	Script {
+		id: script;
+		source: "sha256.min.js";
 	}
 }
