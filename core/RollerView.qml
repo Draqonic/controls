@@ -1,6 +1,5 @@
 BaseView {
-	property enum orientation { Vertical, Horizontal };
-	prerender: 1.5; //size of reference item
+	property enum orientation { Vertical, Horizontal }: Horizontal; //vertical was not widely tested
 
 	constructor: {
 		this._oldIndex = 0
@@ -8,6 +7,7 @@ BaseView {
 	}
 
 	function positionViewAtIndex(idx) { }
+	content.cssDelegateAlwaysVisibleOnAcceleratedSurfaces: false;
 
 	function _getCurrentIndex(adj) {
 		var n = this._items.length
@@ -16,15 +16,27 @@ BaseView {
 		return (((this.currentIndex + adj) % n) + n) % n
 	}
 
-	function _layout() {
-		if (!this.recursiveVisible)
-			return
+	/// @private creates delegate in given item slot
+	function _createDelegate(idx) {
+		var item = _globals.core.BaseView.prototype._createDelegate.apply(this, arguments)
+		if (this.orientation === this.Horizontal)
+			item.onChanged('width', this._scheduleLayout.bind(this))
+		else
+			item.onChanged('height', this._scheduleLayout.bind(this))
+		return item
+	}
 
+	function _layout(noPrerender) {
 		var model = this.model;
 		if (!model)
 			return
 
 		this.count = model.count
+
+		if (!this.recursiveVisible && !this.offlineLayout) {
+			this.layoutFinished()
+			return
+		}
 
 		var horizontal = this.orientation === this.Horizontal
 		var items = this._items
@@ -45,8 +57,9 @@ BaseView {
 		var positionMode = this.positionMode
 
 		var currentItem = this._createDelegate(currentIndex)
+		var currentItemSize = horizontal? currentItem.width: currentItem.height
 
-		var prerender = this.prerender * currentItem.width
+		var prerender = noPrerender? 0: this.prerender * size
 		var leftMargin = -prerender
 		var rightMargin = size + prerender
 
@@ -56,20 +69,25 @@ BaseView {
 				pos = 0
 				break
 			case this.End:
-				pos = size - currentItem.width
+				pos = size - currentItemSize
 				break
 			default:
 				//log('unsupported position mode ' + positionMode)
 			case this.Center:
-				pos = (size - currentItem.width) / 2
+				pos = (size - currentItemSize) / 2
 				break
 		}
-		currentItem.viewX = pos
+
+		if (horizontal)
+			currentItem.viewX = pos
+		else
+			currentItem.viewY = pos
 
 		var leftIn = true, rightIn = true
-		var prevLeft = 0, prevRight = currentItem.width + spacing
+		var prevLeft = 0, prevRight = currentItemSize + spacing
+
 		if (this.trace)
-			log('layout', n)
+			log("layout " + n + " into " + w + "x" + h + " @ " + this.content.x + "," + this.content.y + ", prerender: " + prerender + ", range: " + leftMargin + ":" + rightMargin)
 
 		for(var i = 0; i < n; ++i) {
 			var item = items[i]
@@ -81,11 +99,12 @@ BaseView {
 			var di = (i & 1)? ((1 - i) / 2 - 1): i / 2
 			var idx = this._getCurrentIndex(di)
 			var item = this._createDelegate(idx)
+			var itemSize = horizontal? item.width: item.height
 			var itemPos
 			var positioned = false
 			if (di < 0 && leftIn && !item.__rendered) {
-				itemPos = prevLeft - spacing - item.width
-				if (itemPos < leftMargin)
+				itemPos = prevLeft - spacing - itemSize
+				if (itemPos + itemSize < leftMargin)
 					leftIn = false
 				prevLeft = itemPos
 				item.__rendered = positioned = true
@@ -95,13 +114,15 @@ BaseView {
 				itemPos = prevRight
 				if (itemPos >= rightMargin)
 					rightIn = false
-				prevRight = itemPos + item.width + spacing
+				prevRight = itemPos + itemSize + spacing
 				item.__rendered = positioned = true
 				if (this.trace)
 					log('positioned (right) ', idx, 'at', itemPos)
 			} else if (di === 0) {
 				//currentIndex 0
 				itemPos = pos
+				prevLeft = itemPos
+				prevRight = itemPos + itemSize + spacing
 				if (this.trace)
 					log('positioned (current) ', idx, 'at', itemPos)
 				item.__rendered = positioned = true
@@ -109,7 +130,10 @@ BaseView {
 
 			if (positioned) {
 				item.visibleInView = true
-				item.viewX = itemPos
+				if (horizontal)
+					item.viewX = itemPos
+				else
+					item.viewY = itemPos
 
 				if (currentIndex == idx && !item.focused) {
 					this.focusChild(item)
@@ -142,7 +166,7 @@ BaseView {
 			//simulate animation to 0
 			this._setContentOffset(0)
 		}
-		this._context._complete()
+		this._context.scheduleComplete()
 	}
 
 	function next() {
@@ -183,7 +207,10 @@ BaseView {
 
 	function _setContentOffset(offset) {
 		this._layout = this._scheduleLayout = function() { } //I LOVE JS
-		this.contentX = offset
+		if (this.orientation === this.Horizontal)
+			this.contentX = offset
+		else
+			this.contentY = offset
 		delete this._layout
 		delete this._scheduleLayout
 	}
@@ -195,6 +222,8 @@ BaseView {
 			this._scheduleLayout()
 			return
 		}
+
+		var horizontal = this.orientation === this.Horizontal
 		//log('scrolling to ', currentIndex, oldIndex, item.viewX, delta)
 
 		//fixme: allow less frequent layouts
@@ -203,7 +232,7 @@ BaseView {
 		//else
 		//	this._setContentOffset(this.contentX + this._nextDelta)
 
-		this._nextDelta = delta * (prevItem.width + this.spacing)
+		this._nextDelta = delta * ((horizontal? prevItem.width: prevItem.height) + this.spacing)
 	}
 
 	onOrientationChanged: { this._scheduleLayout() }
