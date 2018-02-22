@@ -64,7 +64,7 @@ BaseInput {
 
 	function select(start, end) {
 		this.element.dom.focus()
-		this.element.dom.setSelectionRange(1, 3)
+		this.element.dom.setSelectionRange(start, end)
 	}
 
 	function selectAll() {

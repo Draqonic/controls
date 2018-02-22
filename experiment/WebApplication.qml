@@ -1,66 +1,10 @@
-Item {
+MainItem {
 	id: applicationWindow;
 	property Theme theme: Theme { }
-	
-	onCompleted: { 
-
-	 }
-
-	OverflowMixin { global: true; value: OverflowMixin.ScrollY; }
-	signal scrolling;
-	property Object scroll: Object {
-		property real x: -1;
-		property real y: -1;
-		property int maxX: -1;
-		property int maxY: -1;
-		property int width: -1;
-		property int height: -1;
-		
-		function change(x, y) {
-			window.scroll({
-				left: x,
-	      			top: y,
-	      			behavior: 'smooth' 
-			});
-		}
-	}
-	
-	constructor: {
-		window.onscroll = function() {
-			this.scroll.x = window.pageXOffset
-			this.scroll.y = window.pageYOffset
-			this.scroll.height = document.documentElement.scrollHeight
-			this.scroll.width = document.documentElement.scrollWidth
-			this.scrolling()
-		}.bind(this);
-	}
-	
-	/* // TODO: move to overflow; overflow -> move to ScrollView
-	constructor: {
-		document.documentElement.onscroll = function() {
-			this.scroll.x = this.element.dom.scrollLeft
-			this.scroll.y = this.element.dom.scrollTop
-			this.scroll.maxX = this.element.dom.scrollLeftMax
-			this.scroll.maxY = this.element.dom.scrollTopMax
-			this.scroll.height = this.element.dom.scrollHeight
-			this.scroll.width = this.element.dom.scrollWidth
-			this.scrolling()
-		}.bind(this);
-	}
-	*/
-
-	anchors.fill: parent;
+	color: applicationWindow.theme.bgColor;
 	property bool dark: theme.dark;
-	
-	Rectangle {
-		fixed: true;
-		anchors.fill: parent;
-		color: applicationWindow.theme.bgColor;
-		Behavior on background { Animation { duration: 500; } }	
-	}
 
-	
-	// Button
+	// Button test
 	WebItem {
 		clip: true;
 		id: button;
