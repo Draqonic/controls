@@ -1,5 +1,6 @@
 Item {
 	property Font font: Font {}
+	signal fontChanged;
 	property Color color: "#000";
 	property int currentIndex;
 	property int count;

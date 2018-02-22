@@ -5,6 +5,7 @@ Item {
 	property Color color: "#000";				///< text color
 	property Color backgroundColor: "#fff";		///< background color
 	property Font font: Font {}					///< object holding properties of text font
+	signal fontChanged;
 	property Border border: Border {}			///< object holding properties of the border
 	property string type: "text";				///< input type value, must overrie in inheritor
 	property PlaceHolder placeholder: PlaceHolder{}	///< input placeholder object
