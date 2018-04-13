@@ -1,4 +1,4 @@
 AbstractText {
-	color: applicationWindow.theme.fontColorMain;
-	font.family: applicationWindow.theme.font.family;
+	color: webApp.theme.fontColorMain;
+	font.family: webApp.theme.font.family;
 }

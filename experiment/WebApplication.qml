@@ -1,9 +1,10 @@
 MainItem {
-	id: applicationWindow;
+	id: webApp;
 	property Theme theme: Theme { }
-	color: applicationWindow.theme.bgColor;
+	color: theme.bgColor;
 	property bool dark: theme.dark;
 
+/*
 	// Button test
 	WebItem {
 		clip: true;
@@ -218,4 +219,5 @@ MainItem {
 		text: "<h1>Test!</h1>";
 	}
 	}
+*/
 }

@@ -10,7 +10,7 @@ Rectangle {
 	effects.shadow.blur: 6;
 	effects.shadow.spread: 2;
 			
-	color: applicationWindow.theme.toolBarColor;
+	color: webApp.theme.toolBarColor;
 			
 	Behavior on background { Animation { duration: 500; } }
 }

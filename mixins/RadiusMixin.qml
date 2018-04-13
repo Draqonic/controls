@@ -1,4 +1,4 @@
-/// Setting the radius for each angle
+/// Setting the radius for each corner
 BaseMixin {
 	property bool enabled: true;	///< enable/disable mixin
 	property int leftTop;			///< 
@@ -18,7 +18,7 @@ BaseMixin {
 		}
 
 		var radius = this.leftTop + "px " + this.rightTop + "px "
-			+ this.rightBottom + "px " + this.leftBottom + "px "
+			+ this.rightBottom + "px " + this.leftBottom + "px"
 		this.parent.style('border-radius', radius)
 	}
 }

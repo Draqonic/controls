@@ -4,10 +4,10 @@ Object {
 		property string family: "Roboto";
 	}
 	onCompleted: { this._setMaterial(false) }
-	property color bgColor: !dark ? "#FAFAFA" : "#303030";
-	property color dialogColor: dark ? "#424242" : "#FAFAFA";
-	property color fontColorMain: dark ? "white" : "black";
-	property color toolBarColor: !dark ? "#F5F5F5" : "#212121";
+	property color bgColor: "";
+	property color dialogColor: "";
+	property color fontColorMain: "";
+	property color toolBarColor: "";
 	
 	property enum theme { Light, Dark };
 	onThemeChanged: {

@@ -1,5 +1,5 @@
 Item {
-	property Font font: Font {}
+	property lazy font: Font {}
 	signal fontChanged;
 	property Color color: "#000";
 	property int currentIndex;
