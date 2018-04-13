@@ -7,9 +7,33 @@ Item {
 		this._activityStack = []
 	}
 
+	replaceTopActivity(name, intent, state): {
+		if (this.count > 0) {
+			this._activityStack.pop()
+			this._activityStack.push({ "name": name, "intent": intent, "state": state })
+			this.initTopIntent()
+		} else {
+			log("No activity to pop")
+		}
+	}
+
 	push(name, intent, state): {
 		this._activityStack.push({ "name": name, "intent": intent, "state": state })
 		this.count++
+		this.initTopIntent()
+	}
+
+	closeAllExcept(name): {
+		var activity = this.findActivity(name)
+
+		if (activity) {
+			this.count = 1
+			this._activityStack = [this._activityStack[activity.index]]
+		} else {
+			log("Activity", name, "not found, close all")
+			this.count = 0
+			this._activityStack = []
+		}
 		this.initTopIntent()
 	}
 
@@ -23,12 +47,34 @@ Item {
 		}
 	}
 
-	setState(state, idx): {
-		this._activityStack[idx || this._activityStack.length - 1].state = state
+	findActivity(name): {
+		var activities = this.children.filter(function(element) { return element instanceof _globals.controls.core.Activity && element.name == name })
+		if (activities && activities.length) {
+			return activities[0]
+		} else {
+			log("Activity for name", name, "not found")
+			return null
+		}
 	}
 
-	setIntent(intent, idx): {
-		this._activityStack[idx || this._activityStack.length - 1].intent = intent
+	setState(state, name): {
+		if (!name) {
+			this._activityStack[this._activityStack.length - 1].state = state
+		} else {
+			var activity = this.findActivity(name)
+			if (activity)
+				activity.state = state
+		}
+	}
+
+	setIntent(intent, name): {
+		if (!name) {
+			this._activityStack[this._activityStack.length - 1].intent = intent
+		} else {
+			var activity = this.findActivity(name)
+			if (activity)
+				activity.intent = intent
+		}
 	}
 
 	clear: {
