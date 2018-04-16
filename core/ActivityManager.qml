@@ -1,3 +1,5 @@
+//@using { controls.core.Activity }
+//@using { controls.core.LazyActivity }
 Item {
 	property int count;
 	property bool keepLastActivity: true;
@@ -48,9 +50,27 @@ Item {
 	}
 
 	findActivity(name): {
-		var activities = this.children.filter(function(element) { return element instanceof _globals.controls.core.Activity && element.name == name })
+		var activities = this.children.filter(function(element) {
+			return element instanceof _globals.controls.core.Activity && element.name == name
+		})
 		if (activities && activities.length) {
 			return activities[0]
+		} else {
+			log("Activity for name", name, "not found")
+			return null
+		}
+	}
+
+	createActivity(name): {
+		var activity = this.findActivity(name)
+		if (activity)
+			return activity
+		var activities = this.children.filter(function(element) {
+			return element instanceof _globals.controls.core.LazyActivity && element.name == name
+		})
+		if (activities && activities.length) {
+			activity = activities[0]
+			return activity.createItem()
 		} else {
 			log("Activity for name", name, "not found")
 			return null
@@ -61,7 +81,7 @@ Item {
 		if (!name) {
 			this._activityStack[this._activityStack.length - 1].state = state
 		} else {
-			var activity = this.findActivity(name)
+			var activity = this.createActivity(name)
 			if (activity)
 				activity.state = state
 		}
@@ -71,7 +91,7 @@ Item {
 		if (!name) {
 			this._activityStack[this._activityStack.length - 1].intent = intent
 		} else {
-			var activity = this.findActivity(name)
+			var activity = this.createActivity(name)
 			if (activity)
 				activity.intent = intent
 		}
@@ -96,9 +116,10 @@ Item {
 		var topActivity = this._activityStack[this._activityStack.length - 1]
 		var children = this.children
 
+		log('initTopIntent: ' + topActivity.name)
 		for (var i = 0; i < children.length; ++i) {
 			var child = children[i]
-			if (!child || !(child instanceof _globals.controls.core.Activity))
+			if (!child || !(child instanceof _globals.controls.core.BaseActivity))
 				continue
 
 			if (child.name === topActivity.name) {
