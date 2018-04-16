@@ -21,12 +21,18 @@ BaseInput {
 	}
 
 	constructor: {
-		this.element.on("input", function() { this.text = this.element.dom.value }.bind(this))
-		this.element.on('select', function() {
+		this.element.on("input", context.wrapNativeCallback(function() { this.text = this.element.dom.value }.bind(this)))
+		this.element.on('select', context.wrapNativeCallback(function() {
 			this.selectionStart = this.element.dom.selectionStart
 			this.selectionEnd = this.element.dom.selectionEnd
 			this.selectedText = this.getText(this.selectionStart, this.selectionEnd)
-		}.bind(this))
+		}.bind(this)))
+		this.element.on('focus', context.wrapNativeCallback(function() {
+			this.focused = true
+		}.bind(this)))
+		this.element.on('blur', context.wrapNativeCallback(function() {
+			this.focused = false
+		}.bind(this)))
 	}
 
 	onEchoModeChanged: {
