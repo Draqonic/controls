@@ -21,6 +21,7 @@ Item {
 		font.pointSize: 12.1; // 16px
 		text: parent.text;
 		echoMode: parent.echoMode;
+		onTextChanged: { this.parent.text = value }
 	}
 
 	Rectangle {
