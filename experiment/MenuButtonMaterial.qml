@@ -8,6 +8,7 @@ Rectangle {
 	property int animationDuration: 150;
 	property int colorDuration: 150;
 	property bool hovered: hover.value;
+	property bool activated: menuIconPrivate.activated;
 	color: hovered ? (pressMixin.pressed ? colorPressed : colorHovered) : "transparent";
 
 	signal clicked;
@@ -32,5 +33,13 @@ Rectangle {
 
 	HoverMixin {
 		id: hover;
+	}
+
+	function activate() {
+		menuIconPrivate.activate()
+	}
+	
+	function deactivate() {
+		menuIconPrivate.deactivate()
 	}
 }
