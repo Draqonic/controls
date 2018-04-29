@@ -20,9 +20,9 @@ Item {
 	        id: timerAudioHack;
 		running: parent._timerRunning;
 		repeat: true;
-		onTriggered: { console.log("Timer"); this.parent.play() }
+		onTriggered: { this.parent.play() }
 	}
-	property bool _timerRunning: autoPlay;
+	property bool _timerRunning: context.system.device !== System.Mobile && autoPlay;
 	
 	onPlaying: {
 		this._timerRunning = false
