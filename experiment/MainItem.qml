@@ -4,6 +4,7 @@ Item {
 	anchors.fill: parent;
 	property Color color;
 	property string title;
+	property bool mobile: context.system.device === System.Mobile || width < height;
 
 	constructor: {
 		this.title = document.title
