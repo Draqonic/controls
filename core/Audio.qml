@@ -29,15 +29,16 @@ Item {
 	}
 	
 	constructor: {
-		this.element.dom.preload = "none"
-		this.element.dom.onloadstart = context.wrapNativeCallback(function() { console.log("LOADSTAT", this.Loading); this.status = this.Loading }.bind(this))
-		this.element.dom.ondurationchange = context.wrapNativeCallback(function() { this.duration = this.element.dom.duration * 1000; }.bind(this))
-		this.element.dom.onloadeddata = context.wrapNativeCallback(function() { this.status = this.Loaded }.bind(this))
-		this.element.dom.onplaying = context.wrapNativeCallback(function() { this.running = true; this.playing() }.bind(this))
-		this.element.dom.onpause = context.wrapNativeCallback(function() { this.running = false; this.paused() }.bind(this))
-		this.element.dom.onended = context.wrapNativeCallback(function() { this.running = false; this.status = this.EndOfMedia; this.stopped() }.bind(this))
-		this.element.dom.ontimeupdate = context.wrapNativeCallback(function() { this.position = this.element.dom.currentTime * 1000 }.bind(this))
-		this.element.dom.onerror = context.wrapNativeCallback(function() { this._timerRunning = false; this.status = this.InvalidMedia }.bind(this))
+		var dom = this.element.dom
+		dom.preload = "none"
+		dom.onloadstart = context.wrapNativeCallback(function() { this.status = this.Loading }.bind(this))
+		dom.ondurationchange = context.wrapNativeCallback(function() { this.duration = this.element.dom.duration * 1000; }.bind(this))
+		dom.onloadeddata = context.wrapNativeCallback(function() { this.status = this.Loaded }.bind(this))
+		dom.onplaying = context.wrapNativeCallback(function() { this.running = true; this.playing() }.bind(this))
+		dom.onpause = context.wrapNativeCallback(function() { this.running = false; this.paused() }.bind(this))
+		dom.onended = context.wrapNativeCallback(function() { this.running = false; this.status = this.EndOfMedia; this.stopped() }.bind(this))
+		dom.ontimeupdate = context.wrapNativeCallback(function() { this.position = this.element.dom.currentTime * 1000 }.bind(this))
+		dom.onerror = context.wrapNativeCallback(function() { this._timerRunning = false; this.status = this.InvalidMedia }.bind(this))
 	}
 
 	///@private
