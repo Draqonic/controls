@@ -1,6 +1,6 @@
 ///Control for playing audio
 Item {
-	property bool autoLoad: false;
+	property bool autoLoad: autoPlay;
 	property bool autoPlay: false;	///<autoplay flag, audio start to play immediately after source was changed
 	property bool repeat;
 	property bool muted;
