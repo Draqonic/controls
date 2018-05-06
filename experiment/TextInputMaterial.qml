@@ -2,6 +2,7 @@ Item {
 	width: 120;
 	height: ti.height + 15;
 	property string text: "";
+	property string color: "black";
 	property enum echoMode;
 	property var textInput: ti;
 	property Color materialColor: "#E91E63";
@@ -20,6 +21,7 @@ Item {
 		placeholder.family: "Roboto";
 		font.pointSize: 12.1; // 16px
 		text: parent.text;
+		color: parent.color;
 		echoMode: parent.echoMode;
 		onTextChanged: { this.parent.text = value }
 	}
