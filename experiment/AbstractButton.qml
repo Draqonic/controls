@@ -32,7 +32,7 @@
         Row {
             id: privateAbstractButtonRow;
             anchors.centerIn: parent;
-            spacing: 5;
+            spacing: !privateAbstractButtonText.text || !privateAbstractButtonIcon.source ? 0 : 5;
             Image {
                 anchors.verticalCenter: parent.verticalCenter;
                 width: source ? privateAbstractButtonIcon.width : 0;
