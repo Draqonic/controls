@@ -1,7 +1,8 @@
+///object for sharing URL in corresponded social network
 Object {
-	property enum socialNetwork { None, GPlus, Facebook, Vk, Twitter, Telegram, OK }; ///<
+	property enum socialNetwork { None, GPlus, Facebook, Vk, Twitter, Telegram, OK }; ///< social network name
 	property string href; ///<
-	property string url; ///<
+	property string url; ///< URL you want to share
 	// TODO: title, description
 
 	onSocialNetworkChanged: {
@@ -16,6 +17,7 @@ Object {
 		}
 	}
 
+	///load URL
 	open: {
 		if (!this.href) {
 			log("href is undefined!")
@@ -27,6 +29,7 @@ Object {
 		window.open(this.href + this.url)
 	}
 
+	///set location to corresponded URL
 	redirect: {
 		if (!this.href) {
 			log("href is undefined!")
