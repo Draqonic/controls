@@ -30,6 +30,7 @@ Item {
 		onClicked(index, name): {
 			this.parent.text = name
 			this.parent.currentIndex = index
+			prvtComboBoxMenu.visible = false
 		}
 	}
 }

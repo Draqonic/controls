@@ -34,11 +34,12 @@ Item {
 	}
 
 	function close() {
-		this.visible = false
+		if (this.menuMode)
+			this.visible = false
 	}
 
 	function openOrClose() {
- 		this.visible ? this.close() : this.open()
+ 		this.visible ? this.visible = false : this.open()
 	}
 
 	Rectangle {
