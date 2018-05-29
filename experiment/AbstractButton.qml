@@ -5,7 +5,7 @@ Rectangle {
 	property bool hovered: privateAbstractButtonMouse.containsMouse;
 	property bool enabled: true;
 	property enum position { None, Center, Left, Right}: Center;
-	color: hovered ? (pressed ? privateAbstractButtonColor.pressed : privateAbstractButtonColor.hovered) : privateAbstractButtonColor.default;
+	color: hovered ? (pressed ? colors.pressed : colors.hovered) : colors.default;
 	width: privateAbstractButtonRow.width + 15;
 	height: 45;
 	signal clicked;

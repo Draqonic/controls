@@ -4,21 +4,22 @@ Item {
 
 	id: prvtMenuItem;
 	width: 200;
-	height: prvtMenuListView.height; // 300
+	height: Math.min(300, prvtMenuListView.height);
+	OverflowMixin { value: OverflowMixin.ScrollY; }
 	visible: false;
 	property bool menuMode: true;
+	signal clicked;
 	
 	constructor: {
 		this.objs = []
 	}
 
 	onCompleted: {
-		this.background.anchors.fill = this
+		this.background._replaceUpdater('width', function() { this.background.width = this.width }.bind(this), [[this, 'width']])
+		this.background._replaceUpdater('height', function() { this.background.height = prvtMenuListView.height }.bind(this), [[prvtMenuListView, 'height']])
 	}
 
-	property Object model: ListModel {
-		id: prvtMenuListModel;
-	}
+	property alias model: prvtMenuListView.model;
 
 	property Object background: Rectangle {
 		color: "white";
@@ -33,8 +34,7 @@ Item {
 	}
 
 	function close() {
-		if (this.menuMode)
-			this.visible = false
+		this.visible = false
 	}
 
 	function openOrClose() {
@@ -60,15 +60,18 @@ Item {
 		id: prvtMenuListView;
 		width: 100%;
 		height: contentHeight;
-		model: parent.model;
+		model: ListModel {
+			id: prvtMenuListModel;
+		}
 		z: 1;
-		
 		delegate: ItemDelegate {
 			width: 100%;
-			text: model.text;
+			text: model.modelData;
 			onClicked: {
 				prvtMenuItem.close()
-				prvtMenuItem.objs[model.index].triggered()
+				prvtMenuItem.clicked(model.index, model.modelData)
+				if (prvtMenuItem.objs[model.index])
+					prvtMenuItem.objs[model.index].triggered()
 			}
 		}
 	}
