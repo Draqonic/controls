@@ -1,0 +1,3 @@
+AbstractButton {
+	//property bool highlighted;
+}
