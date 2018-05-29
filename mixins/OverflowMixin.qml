@@ -1,6 +1,6 @@
 ///setup parents overflow mode
 BaseMixin {
-	property enum value { Visible, Hidden, Scroll, ScrollX, ScrollY }: Scroll;	///< overflow mode value, can be:  Visible, Hidden, Scroll, ScrollX, ScrollY
+	property enum value { Visible, Hidden, Scroll, ScrollX, ScrollY }: ScrollY;	///< overflow mode value, can be:  Visible, Hidden, Scroll, ScrollX, ScrollY
 
 	/// @internal
 	_updateOverflow(value): {

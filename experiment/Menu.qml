@@ -8,6 +8,8 @@ Item {
 	OverflowMixin { value: OverflowMixin.ScrollY; }
 	visible: false;
 	property bool menuMode: true;
+	property string textRole: "modelData";
+	property int count: prvtMenuListView.model.count;
 	signal clicked;
 	
 	constructor: {
@@ -67,10 +69,10 @@ Item {
 		z: 1;
 		delegate: ItemDelegate {
 			width: 100%;
-			text: model.modelData;
+			onCompleted: { this.text = model[prvtMenuItem.textRole] }
 			onClicked: {
 				prvtMenuItem.close()
-				prvtMenuItem.clicked(model.index, model.modelData)
+				prvtMenuItem.clicked(model.index, model[prvtMenuItem.textRole])
 				if (prvtMenuItem.objs[model.index])
 					prvtMenuItem.objs[model.index].triggered()
 			}
