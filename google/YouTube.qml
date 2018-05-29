@@ -12,7 +12,7 @@ IFrame {
 
 	///@private
 	onSourceChanged: {
-		// TODO: urls without https
+		// TODO: urls without https, urls with www
 		if (this.source.indexOf("watch?v=") > -1 || this.source.indexOf("youtu.be") > -1) {
 			var source = this.source
 			source = source.replace("watch?v=", "embed/")

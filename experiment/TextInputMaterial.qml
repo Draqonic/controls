@@ -10,7 +10,7 @@ Item {
 	property alias placeholder: ti.placeholder;
 
 	onMaterialColorChanged: {
-		ti.style('caret-color', _globals.core.normalizeColor(this.materialColor))
+		ti.style('caret-color', _globals.core.Color.normalize(this.materialColor))
 	}
 
 	TextInput {

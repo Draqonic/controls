@@ -18,6 +18,6 @@ Item {
 		Behavior on background { Animation { duration: 500; } }	
 	}
 
-    onColorChanged: { mainItemBackground.color = value; document.body.style.background = _globals.core.normalizeColor(value) }
+    onColorChanged: { mainItemBackground.color = value; document.body.style.background = _globals.core.Color.normalize(value) }
     onTitleChanged: { document.title = value }
 }
