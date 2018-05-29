@@ -6,6 +6,8 @@ Item {
 	width: 200;
 	height: prvtMenuListView.height; // 300
 	visible: false;
+	property bool menuMode: true;
+	
 	constructor: {
 		this.objs = []
 	}
@@ -23,13 +25,16 @@ Item {
 	}
 
 	function open() {
-		this.x = window.event.clientX + 10
-		this.y = window.event.clientY + 10
+		if (this.menuMode) {
+			this.x = window.event.clientX + 10
+			this.y = window.event.clientY + 10
+		}
 		this.visible = true
 	}
 
 	function close() {
-		this.visible = false
+		if (this.menuMode)
+			this.visible = false
 	}
 
 	function openOrClose() {
