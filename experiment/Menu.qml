@@ -3,15 +3,15 @@ Item {
 	// TODO: add, remove items, visible
 
 	id: prvtMenuItem;
-	width: 200;
+	width: prvtMenuListView.width;
 	height: Math.min(300, prvtMenuListView.height);
 	OverflowMixin { value: OverflowMixin.ScrollY; }
 	visible: false;
 	property bool menuMode: true;
-	property string textRole: "modelData";
+	property string textRole: "value";
 	property int count: prvtMenuListView.model.count;
 	signal clicked;
-	
+
 	constructor: {
 		this.objs = []
 	}
@@ -61,14 +61,15 @@ Item {
 	property var objs;
 	ListView {
 		id: prvtMenuListView;
-		width: 100%;
+		width: contentWidth;
 		height: contentHeight;
 		model: ListModel {
 			id: prvtMenuListModel;
 		}
 		z: 1;
-		delegate: ItemDelegate {
-			width: 100%;
+
+		delegate: AbstractButton {
+			width: Math.max(prvtMenuItem.width, Math.max(privateAbstractButtonRow.width + 15, 100%));
 			onCompleted: { this.text = model[prvtMenuItem.textRole] }
 			onClicked: {
 				prvtMenuItem.close()

@@ -6,9 +6,9 @@ Item {
 	property string displayText: currentText;
 	property int currentIndex; // TODO: changed
 	property alias textRole: prvtComboBoxMenu.textRole;
-	property int count: prvtMenuItem.count;
+	property int count: prvtMenuListView.model.count;
 	property int menuWidth;
-	
+
 	onCompleted: {
 		if  (this.currentIndex > this.model.count)
 			this.currentIndex = 0
@@ -17,18 +17,22 @@ Item {
 			this.currentText = prvtMenuListView.model.get(this.currentIndex)[this.textRole]
 	}
 
-	ButtonMaterial {
+	AbstractButton {
 		id: prvtComboBoxButton;
 		text: parent.displayText;
+		colors.default: "white";
+		width: Math.max(privateAbstractButtonRow.width + 15, parent.width);
+		height: Math.max(45, parent.height);
+
 		onClicked: {
-			prvtComboBoxMenu.openOrClose()
+			prvtComboBoxMenu.visible = !prvtComboBoxMenu.visible
 		}
 	}
 
-	MenuMaterial {
+	Menu {
 		id: prvtComboBoxMenu;
 		anchors.horizontalCenter: parent;
-		width: parent.menuWidth ? parent.menuWidth : privateAbstractButtonRow.width + 15;
+		width: parent.menuWidth ? parent.menuWidth : Math.max(prvtComboBoxButton.width, privateAbstractButtonRow.width + 15);
 		//height: maximum to page end
 		y: parent.height + 2;
 		menuMode: false;
