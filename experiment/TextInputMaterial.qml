@@ -1,9 +1,9 @@
 Item {
 	width: 120;
 	height: ti.height + 15;
-	property string text: "";
-	property string color: "black";
-	property enum echoMode;
+	property alias text: ti.text;
+	property alias color: ti.color;
+	property alias echoMode: ti.echoMode;
 	property var textInput: ti;
 	property Color materialColor: "#E91E63";
 	property alias font: ti.font;
@@ -16,14 +16,8 @@ Item {
 	TextInput {
 		id: ti;
 		width: 100%;
-		height: font.pixelSize + font.pixelSize * 0.4;
-		font.family: "Roboto";
-		placeholder.family: "Roboto";
-		font.pointSize: 12.1; // 16px
-		text: parent.text;
-		color: parent.color;
-		echoMode: parent.echoMode;
-		onTextChanged: { this.parent.text = value }
+		height: font.pixelSize * 1.4;
+		font.pixelSize: 16;
 	}
 
 	Rectangle {
