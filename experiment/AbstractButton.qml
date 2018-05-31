@@ -1,8 +1,8 @@
 Rectangle {
 	id: privateAbstractButton;
 	property string text;
-	property bool pressed: privateAbstractButtonMouse.pressed;
-	property bool hovered: privateAbstractButtonMouse.containsMouse;
+	property alias pressed: privateAbstractButtonPress.pressed;
+	property alias hovered: privateAbstractButtonHover.value;
 	property bool enabled: true;
 	property enum position { None, Center, Left, Right}: Center;
 	color: hovered ? (pressed ? colors.pressed : colors.hovered) : colors.default;
@@ -58,9 +58,16 @@ Rectangle {
 		}
 	}
 
-	MouseArea {
-		id: privateAbstractButtonMouse;
-		anchors.fill: parent;
-		onClicked: { if (privateAbstractButton.enabled) this.parent.clicked() }
+	MousePressMixin {
+		id: privateAbstractButtonPress;
+
+		onPressedChanged: {
+			if (value) this.parent.clicked()
+		}
+	}
+
+	HoverMixin {
+		id: privateAbstractButtonHover;
+		cursor: "pointer";
 	}
 }
