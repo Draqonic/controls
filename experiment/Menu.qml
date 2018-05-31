@@ -1,4 +1,4 @@
-Item {
+Rectangle {
 	// TODO: correct position for window end
 	// TODO: add, remove items, visible
 
@@ -11,22 +11,15 @@ Item {
 	property string textRole: "value";
 	property int count: prvtMenuListView.model.count;
 	signal clicked;
-	z: 50;
+	color: "white";
+	z: 10;
+	property int buttonZ;
 
 	constructor: {
 		this.objs = []
 	}
 
-	onCompleted: {
-		this.background._replaceUpdater('width', function() { this.background.width = this.width }.bind(this), [[this, 'width']])
-		this.background._replaceUpdater('height', function() { this.background.height = prvtMenuListView.height }.bind(this), [[prvtMenuListView, 'height']])
-	}
-
 	property alias model: prvtMenuListView.model;
-
-	property Object background: Rectangle {
-		color: "white";
-	}
 
 	function open() {
 		if (this.menuMode) {
@@ -45,20 +38,6 @@ Item {
  		this.visible ? this.visible = false : this.open()
 	}
 
-	Rectangle {
-		color: "white";
-		width: 20;
-		height: 20;
-		radius: 10;
-		onCompleted: { this.color = prvtMenuItem.background.color }
-		border.width: 2;
-		z: 2;
-		x: parent.width - 10;
-		y: -10;
-		visible: false;
-		MousePressMixin { onPressedChanged: { prvtMenuItem.close() } }
-	}
-	
 	property var objs;
 	ListView {
 		id: prvtMenuListView;
@@ -67,11 +46,25 @@ Item {
 		model: ListModel {
 			id: prvtMenuListModel;
 		}
-		z: 1;
 
 		delegate: AbstractButton {
+			z: prvtMenuItem.buttonZ
 			width: Math.max(prvtMenuItem.width, Math.max(privateAbstractButtonRow.width + 15, 100%));
-			onCompleted: { this.text = model[prvtMenuItem.textRole] }
+			position: model.position
+
+			onCompleted: {
+				this.text = model[prvtMenuItem.textRole]
+				if (!model.icon) return
+				if (model.icon.source)
+					this.icon.source = model.icon.source
+				if (model.icon.opacity >= 0)
+					this.icon.opacity = model.icon.opacity
+				if (model.icon.width > 0)
+					this.icon.width = model.icon.width
+				if (model.icon.height > 0)
+					this.icon.height = model.icon.height
+			}
+
 			onClicked: {
 				prvtMenuItem.close()
 				prvtMenuItem.clicked(model.index, model[prvtMenuItem.textRole])

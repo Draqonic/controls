@@ -35,7 +35,9 @@ Rectangle {
 		id: privateAbstractButtonRow;
 		spacing: !privateAbstractButtonText.text || !privateAbstractButtonIcon.source ? 0 : privateAbstractButton.spacing;
 		anchors.left: privateAbstractButton.position === parent.Left ? parent.left : null;
+		anchors.leftMargin: 7
 		anchors.right: privateAbstractButton.position === parent.Right ? parent.right : null;
+		anchors.rightMargin: 7
 		anchors.centerIn: privateAbstractButton.position === parent.Center ? parent : null;
 		anchors.verticalCenter: privateAbstractButton.position !== parent.Center ? parent.verticalCenter : null;
 
@@ -46,7 +48,6 @@ Rectangle {
 			source: privateAbstractButtonIcon.source;
 			opacity: privateAbstractButtonIcon.opacity;
 			fillMode: privateAbstractButtonIcon.height ? Image.Stretch : Image.PreserveAspectFit;
-			onHeightChanged, onWidthChanged: { log(this.width, this.height, "?") }
 		}
 
 		Text {
