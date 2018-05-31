@@ -5,7 +5,7 @@ Object {
 	// TODO: text changes
 
 	onCompleted: {
-		this.parent.model.append({"modelData": this.text })
+		this.parent.model.append({"value": this.text })
 		this.parent.objs.push(this)
 		this.currentIndex = this.parent.objs.length - 1
 	}

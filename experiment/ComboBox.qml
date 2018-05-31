@@ -8,13 +8,18 @@ Item {
 	property alias textRole: prvtComboBoxMenu.textRole;
 	property int count: prvtMenuListView.model.count;
 	property int menuWidth;
+	property var button: prvtComboBoxButton;
+	property var menu: prvtComboBoxMenu;
 
 	onCompleted: {
 		if  (this.currentIndex > this.model.count)
 			this.currentIndex = 0
 
-		if (this.model.count)
-			this.currentText = prvtMenuListView.model.get(this.currentIndex)[this.textRole]
+		if (this.model.count) {
+			this.currentText = this.model instanceof _globals.core.ListModel
+							? this.model.get(this.currentIndex)[this.textRole]
+								: this.model[this.currentIndex + this.currentIndex === 0 ? 1 : 0] // TODO: remove temp fix
+		}
 	}
 
 	AbstractButton {

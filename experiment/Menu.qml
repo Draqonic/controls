@@ -11,6 +11,7 @@ Item {
 	property string textRole: "value";
 	property int count: prvtMenuListView.model.count;
 	signal clicked;
+	z: 50;
 
 	constructor: {
 		this.objs = []
