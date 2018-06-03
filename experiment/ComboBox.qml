@@ -39,7 +39,6 @@ Item {
 		anchors.horizontalCenter: parent;
 		width: parent.menuWidth ? parent.menuWidth : Math.max(prvtComboBoxButton.width, privateAbstractButtonRow.width + 15);
 		//height: maximum to page end
-		y: parent.height + 2;
 		menuMode: false;
 
 		onClicked(index, name): {
