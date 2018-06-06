@@ -7,13 +7,13 @@ Object {
 
 	onSocialNetworkChanged: {
 		switch(value) {
-		case this.None:	this.href = ''; break
+		case this.None:		this.href = ''; break
 		case this.GPlus:	this.href = 'https://plus.google.com/share?url='; break
 		case this.Facebook:	this.href = 'https://www.facebook.com/sharer/sharer.php?u='; break
 		case this.Vk:		this.href = 'https://vk.com/share.php?url='; break
 		case this.Twitter:	this.href = 'https://twitter.com/share?url='; break
 		case this.Telegram:	this.href = 'https://t.me/share/url?url='; break
-		case this.OK:	this.href = 'https://connect.ok.ru/offer?url='; break
+		case this.OK:		this.href = 'https://connect.ok.ru/offer?url='; break
 		}
 	}
 

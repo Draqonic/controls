@@ -17,8 +17,8 @@ BaseMixin {
 			return
 		}
 
-		var radius = this.leftTop + "px " + this.rightTop + "px "
-			+ this.rightBottom + "px " + this.leftBottom + "px"
+		var radius = this.leftTop + 'px ' + this.rightTop + 'px '
+			+ this.rightBottom + 'px ' + this.leftBottom + 'px'
 		this.parent.style('border-radius', radius)
 	}
 }
