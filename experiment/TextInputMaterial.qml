@@ -8,6 +8,7 @@ Item {
 	property Color materialColor: "#E91E63";
 	property alias font: ti.font;
 	property alias placeholder: ti.placeholder;
+	property alias enabled: ti.enabled;
 
 	onMaterialColorChanged: {
 		ti.style('caret-color', _globals.core.Color.normalize(this.materialColor))
