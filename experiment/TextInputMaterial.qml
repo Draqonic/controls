@@ -26,7 +26,7 @@ Item {
 		anchors.bottomMargin: 8 + ti.font.pixelSize * 0.1;
 		height: hover.value || ti.focused ? 2 : 1;
 		width: 100%;
-		color: hover.value ? (ti.focused ? parent.materialColor : "black") : (ti.focused ? parent.materialColor : "gray");
+		color: hover.value? !ti.enabled ? "gray" : (ti.focused ? parent.materialColor : "black") : !ti.enabled ? "gray" : (ti.focused ? parent.materialColor : "gray");
 	}
 
 	HoverMixin {
