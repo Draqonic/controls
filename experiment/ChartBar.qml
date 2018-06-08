@@ -1,3 +1,5 @@
+/// Need Chart.js
+
 Canvas {
 	property var chart;
 	property string title;
@@ -31,8 +33,7 @@ Canvas {
 	}
 	
 	Timer {
-		id: resizeTimer;
-		interval: 100; running: true; repeat: true;
+ 		id: resizeTimer; interval: 100;
 		onTriggered: { if (!this.parent.chart) return; log('resize')
 		this.parent.chart.resize(); this.parent.chart.resize() }
 	}
