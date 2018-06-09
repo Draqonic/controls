@@ -3,7 +3,7 @@
 Canvas {
 	property var chart;
 	property string title;
-	property array labels;
+	property array categories;
 	property bool legend: true;
 	property bool responsive: true;
 
@@ -13,8 +13,8 @@ Canvas {
 		this.chart.update()
 	}
 	
-	onLabelsChanged: {
-		this.chart.data.labels = value
+	onCategoriesChanged: {
+		this.chart.data.labels = typeof value === 'number' ? Array(Math.round(value)) : value
 		this.chart.update()
 	}
 	
@@ -33,13 +33,12 @@ Canvas {
 	}
 	
 	Timer {
- 		id: resizeTimer; interval: 100;
-		onTriggered: { if (!this.parent.chart) return; log('resize')
-		this.parent.chart.resize(); this.parent.chart.resize() }
+ 		id: resizeTimer; interval: 60;
+		onTriggered: { this.parent.chart.resize() }
 	}
 	
 	function _drawChart() {
-		var ctx = this.getContext('2d');
+		var ctx = this.getContext('2d')
 		this.chart = new Chart(ctx, { type: 'bar', data: {}, options: {} })
 	}
 

@@ -1,7 +1,9 @@
 Object {
-	property array data;
+	property array values;
 	property string label: 'Label ' + (dataId + 1);
 	property array color;
+	property int borderWidth;
+	property var borderColor;
 	property int dataId;
 	
 	constructor: {
@@ -9,8 +11,8 @@ Object {
 		this.dataId = this.parent.chart.data.datasets.length - 1
 	}
 	
-	onDataChanged: {
-		this.parent.chart.data.datasets[this.dataId].data = value
+	onValuesChanged: {
+		this.parent.chart.data.datasets[this.dataId].data = typeof value === 'number' ? Array.apply(null, Array(Math.round(value))).map(function() { return Math.round(Math.random() * value); }) : value
 		this.parent.chart.update()
 	}
 	
@@ -22,5 +24,16 @@ Object {
 	onColorChanged: {
 		this.parent.chart.data.datasets[this.dataId].backgroundColor = value
 		this.parent.chart.update()
+	}
+	
+	onBorderWidthChanged: {
+		this.parent.chart.data.datasets[this.dataId].borderWidth = value
+		this.parent.chart.update()
+	}
+	
+	onBorderColorChanged: {
+		this.parent.chart.data.datasets[this.dataId].borderColor = value
+		this.parent.chart.update()
+		log(this.parent.chart.data.datasets[this.dataId].fill)
 	}
 }
