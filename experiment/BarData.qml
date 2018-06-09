@@ -1,6 +1,6 @@
 Object {
 	property array data;
-	property string label: 'Label ' + dataId;
+	property string label: 'Label ' + (dataId + 1);
 	property array color;
 	property int dataId;
 	

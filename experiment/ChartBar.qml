@@ -29,7 +29,7 @@ Canvas {
 	}
 
 	onNewBoundingBox: {
- 		resizeTimer.restart()
+ 		resizeTimer.restart() // temporary hack
 	}
 	
 	Timer {
