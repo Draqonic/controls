@@ -50,11 +50,8 @@ Rectangle {
 		delegate: AbstractButton {
 			z: prvtMenuItem.buttonZ
 			width: Math.max(prvtMenuItem.width, Math.max(privateAbstractButtonRow.width + 15, 100%));
-			position: model.position;
-			visible: model.visible;
-			height: visible ? 45 : 0;
 
-			onCompleted: {
+			onCompleted: { // TODO
 				this.text = model[prvtMenuItem.textRole]
 				if (!model.icon) return
 				if (model.icon.source)
@@ -65,6 +62,8 @@ Rectangle {
 					this.icon.width = model.icon.width
 				if (model.icon.height > 0)
 					this.icon.height = model.icon.height
+				if (!model.visible) this.visible = false
+				if (model.position) this.position = model.position
 			}
 
 			onClicked: {

@@ -4,7 +4,7 @@ Item {
 	property alias model: prvtMenuListView.model;
 	property string currentText: "";
 	property string displayText: currentText;
-	property int currentIndex: -1; // TODO: onCurrentIndexChanged
+	property int currentIndex: 0; // TODO: onCurrentIndexChanged
 	property alias textRole: prvtComboBoxMenu.textRole;
 	property int count: prvtMenuListView.model.count;
 	property int menuWidth;
@@ -13,12 +13,12 @@ Item {
 
 	onCompleted: {
 		if  (this.currentIndex > this.model.count)
-			this.currentIndex = 0
+			this._setProperty('currentIndex', 0)
 
 		if (this.model.count && this.currentIndex >= 0) {
 			this.currentText = this.model instanceof _globals.core.ListModel
 							? this.model.get(this.currentIndex)[this.textRole]
-								: this.model[this.currentIndex + Array.isArray(this.model) ? 1 : 0] // TODO: remove temp fix
+								: this.model[this.currentIndex]
 		}
 	}
 
