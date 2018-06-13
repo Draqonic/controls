@@ -50,6 +50,7 @@ Rectangle {
 		delegate: AbstractButton {
 			z: prvtMenuItem.buttonZ
 			width: Math.max(prvtMenuItem.width, Math.max(privateAbstractButtonRow.width + 15, 100%));
+			height: visible ? 45 : 0
 
 			onCompleted: { // TODO
 				this.text = model[prvtMenuItem.textRole]
