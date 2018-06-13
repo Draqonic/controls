@@ -4,7 +4,7 @@ Rectangle {
 
 	id: prvtMenuItem;
 	width: prvtMenuListView.width;
-	height: Math.min(300, prvtMenuListView.height);
+	height: Math.min(300, prvtMenuListView.height) + 5;
 	OverflowMixin { value: OverflowMixin.ScrollY; }
 	visible: false;
 	property bool menuMode: true;
