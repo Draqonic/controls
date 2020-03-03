@@ -3,7 +3,7 @@ Rectangle {
 	signal clicked;			///< button clicked signal
 	property string text;	///< button inner text
 	property Font font: Font { }	///< button texts font
-	property Paddings paddings: Paddings {}		///< inner text paddings
+	property lazy paddings: Paddings {}		///< inner text paddings
 	property HoverMixin hover: HoverMixin { cursor: "pointer"; }
 	property color textColor;
 	property int paintedWidth;
@@ -28,12 +28,13 @@ Rectangle {
 
 	///@private
 	function registerStyle(style, tag) {
-		style.addRule(tag, "position: absolute; visibility: inherit; text-decoration: none; border: none; outline: none; box-sizing: content-box;")
+		style.addRule(tag, "position: absolute; visibility: inherit; text-decoration: none; border: none; outline: none; box-sizing: content-box; padding: 0;")
 	}
 
 	///@private
 	function _updateSize() {
 		this.style({ width: 'auto', height: 'auto'}) //no need to reset it to width, it's already there
+		this.element.updateStyle()
 
 		this.paintedWidth = this.element.dom.scrollWidth
 		this.paintedHeight = this.element.dom.scrollHeight

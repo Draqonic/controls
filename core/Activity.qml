@@ -1,20 +1,18 @@
+///simple activity control
 BaseActivity {
-	property bool handleDisplay;
-
+	///start activity
 	start: {
-		if (this.handleDisplay)
-			this.style('display', 'block')
-		this.visible = true
+		this.active = true
 		this.started()
 	}
 
+	///stop activity
 	stop: {
-		if (this.handleDisplay)
-			this.style('display', 'none')
-		this.visible = false
+		this.active = false
 		this.stopped()
 	}
 
+	///get activity item
 	function getActivity() {
 		return this
 	}

@@ -9,19 +9,21 @@ Item {
 
 	/// @private
 	constructor: {
-		this.element.dom.type = "range"
-		this.element.dom.value = 0
-		this.element.on("input", function() { this.value = this.element.dom.value }.bind(this))
+		this.element.setAttribute('type', 'range')
+		this._setValue(0)
+		this.element.on("input", function() {
+			this.value = this._getValue()
+		}.bind(this))
 	}
 
 	/// @private
-	onMinChanged: { this.element.dom.min = value; }
+	onMinChanged: { this.element.setProperty('min', value) }
 
 	/// @private
-	onMaxChanged: { this.element.dom.max = value; }
+	onMaxChanged: { this.element.setProperty('max', value) }
 
 	/// @private
-	onStepChanged: { this.element.dom.step = value; }
+	onStepChanged: { this.element.setProperty('step', value) }
 
 	/// @private
 	onOrientationChanged: {
@@ -39,4 +41,14 @@ Item {
 
 	/// returns tag for corresponding element
 	function getTag() { return 'input' }
+
+	/// gets element native value
+	function _getValue() {
+		return this.element.getProperty('value')
+	}
+
+	/// sets element native value
+	function _setValue(value) {
+		this.element.setProperty('value', value)
+	}
 }

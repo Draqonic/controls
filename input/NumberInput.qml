@@ -9,15 +9,14 @@ BaseInput {
 	height: 25;
 	type: "number";
 
-	onMinChanged: { this.element.dom.min = value; }
-	onMaxChanged: { this.element.dom.max = value; }
-	onStepChanged: { this.element.dom.step = value; }
-	onValueChanged: { this.element.dom.value = value; }
+	onMinChanged: { this.element.setProperty('min', value) }
+	onMaxChanged: { this.element.setProperty('max', value) }
+	onStepChanged: { this.element.setProperty('step', value) }
+	onValueChanged: { this._setValue(value) }
 
 	constructor: {
 		this.element.on("input", function() {
-			var currentValue = this.element.dom.value
-			this.value = currentValue <= this.max && currentValue >= this.min ? currentValue : (currentValue > this.max ? this.max : this.min)
+			this.value = this._getValue()
 		}.bind(this))
 	}
 }

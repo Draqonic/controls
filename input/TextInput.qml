@@ -15,13 +15,14 @@ BaseInput {
 	property bool cursorVisible: true;
 
 	onTextChanged: {
-		if (value != this.element.dom.value)
-			this.element.dom.value = value;
+		this._updateValue(value)
 		this.length = this.element.dom.textLength
 	}
 
 	constructor: {
-		this.element.on("input", context.wrapNativeCallback(function() { this.text = this.element.dom.value }.bind(this)))
+		this.element.on("input", function() {
+			this.text = this._getValue()
+		}.bind(this))
 		this.element.on('select', context.wrapNativeCallback(function() {
 			this.selectionStart = this.element.dom.selectionStart
 			this.selectionEnd = this.element.dom.selectionEnd
@@ -82,8 +83,6 @@ BaseInput {
 	}
 
 
-
-
 	function copy() {
 		document.execCommand("Copy");
 	}
@@ -115,7 +114,4 @@ BaseInput {
 	
 	function redo() {
 	}
-	
-
-	
 }

@@ -4,6 +4,6 @@ BaseMixin {
 
 	onValueChanged,
 	onEnabledChanged: {
-		this.parent.element.dom.setAttribute('title', this.enabled ? this.value : '');
+		this.parent.element.setAttribute('title', this.enabled ? this.value : '');
 	}
 }

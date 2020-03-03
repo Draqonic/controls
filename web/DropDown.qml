@@ -1,13 +1,14 @@
+///html drop down list chooser
 Item {
 	property lazy font: Font {}
 	signal fontChanged;
 	property Color color: "#000";
-	property int currentIndex;
-	property int count;
-	property string value;
-	property string text;
-	width: 100;
-	height: 40;
+	property int currentIndex;		///< current option index
+	property int count;				///< drop down options count
+	property string value;			///< current option value
+	property string text;			///< current option text
+	width: 100;		///<@private
+	height: 40;		///<@private
 
 	constructor: {
 		this.count = 0
@@ -35,7 +36,11 @@ Item {
 		this.style(style)
 	}
 
-	/// add option into select
+	/**
+	 * add option into select
+	 * @param {string} value - new option value
+	 * @param {string} text - new option text
+	 */
 	append(value, text): {
 		var option = this._context.createElement('option')
 		option.dom.value = value
@@ -44,6 +49,7 @@ Item {
 		++this.count
 	}
 
+	///remove all options from dropdown list
 	clear: {
 		if (!this.element.dom.options || !this.element.dom.options.length)
 			return
@@ -53,14 +59,10 @@ Item {
 			options[i].remove()
 	}
 
-	onCountChanged: {
-		if (value == 1) {
-			this.value = this.element.dom.value
-			this.text = this.element.dom[0].label
-			this.currentIndex = 0
-		}
-	}
-
+	/**
+	 * remove option from drop down list by index
+	 * @param {number} idx - new option value
+	 */
 	remove(idx): {
 		if (!this.element.dom.options || idx >= this.element.dom.options.length || idx < 0) {
 			log("bad index")
@@ -68,5 +70,13 @@ Item {
 		}
 		this.element.dom.options[idx].remove()
 		--this.count
+	}
+
+	onCountChanged: {
+		if (value == 1) {
+			this.value = this.element.dom.value
+			this.text = this.element.dom[0].label
+			this.currentIndex = 0
+		}
 	}
 }
